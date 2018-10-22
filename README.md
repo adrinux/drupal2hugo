@@ -1,3 +1,18 @@
+# History
+tl:dr Several people have contributed to this project - do look at the forks on github/commit history
+
+This is a fork of https://github.com/skwashd/drupal2hugo
+Which was a fork https://github.com/danapsimer/drupal2hugo
+Which was forked from https://bitbucket.org/rickb777/drupal2hugo
+
+# Changes in this fork
+1. Renamed drupal62hugo to highlight Drupal 6 compatibility vs Rick Beaton's original which has seen further work since it was forked by @danapsimer
+
+
+#
+Original readme below
+#
+
 # Notice
 This is a fork of https://bitbucket.org/rickb777/drupal2hugo
 
