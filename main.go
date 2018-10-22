@@ -26,16 +26,17 @@ package main
 
 import (
 	"bufio"
-	model "github.com/fale/drupal2hugo/model"
-	util "github.com/fale/drupal2hugo/util"
 	"flag"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"io"
 	"os"
 	"path"
 	"strings"
 	"time"
+
+	model "github.com/adrinux/drupal62hugo/model"
+	util "github.com/adrinux/drupal62hugo/util"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var dbName = flag.String("db", "", "Drupal database name - required")
