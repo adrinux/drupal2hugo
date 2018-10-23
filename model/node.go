@@ -28,7 +28,7 @@ import (
 	"fmt"
 
 	"github.com/adrinux/drupal62hugo/util"
-	"github.com/rickb777/gorp"
+	"github.com/go-gorp/gorp"
 )
 
 //type NodeRevision struct {
@@ -143,6 +143,7 @@ func copyOutNodeType(rows []interface{}) []*NodeType {
 type JoinedNodeDataBody struct {
 	Nid       int32
 	Vid       int32
+	UserName  string
 	Type      string
 	Title     string
 	Published bool // column=status
@@ -161,11 +162,13 @@ type JoinedNodeDataBody struct {
 }
 
 func (db Database) JoinedNodeFields(offset, count int) []*JoinedNodeDataBody {
-	sql := `select
-	    n.Nid, n.Vid, n.Type, n.Title, n.status as Published, n.Created, n.Changed, n.Comment,
-	    n.Promote, n.Sticky, nr.Body as BodyValue, nr.Teaser as BodySummary, nr.Format as BodyFormat
-	    from %snode n inner join %snode_revisions nr on n.nid = nr.nid 
-	      and n.vid = nr.vid limit %d,%d`
+	sql := `SELECT
+		n.Nid, n.Vid, u.Name AS UserName, n.Type, n.Title, n.status AS Published, n.Created, n.Changed, n.Comment,
+		n.Promote, n.Sticky, nr.Body AS BodyValue, nr.Teaser AS BodySummary, nr.Format AS BodyFormat
+		FROM %snode n
+		INNER JOIN %snode_revisions nr ON n.nid = nr.nid and n.vid = nr.vid
+		INNER JOIN users u ON n.uid = u.uid
+		LIMIT %d,%d`
 	s2 := fmt.Sprintf(sql, db.Prefix, db.Prefix, offset, count)
 	list, err := db.DbMap.Select(JoinedNodeDataBody{}, s2)
 	util.CheckErrFatal(err, s2)
