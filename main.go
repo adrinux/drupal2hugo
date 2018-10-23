@@ -41,7 +41,7 @@ import (
 
 var dbName = flag.String("db", "", "Drupal database name - required")
 var driver = flag.String("driver", "mysql", "SQL driver")
-var prefix = flag.String("prefix", "drp_", "Drupal table prefix")
+var prefix = flag.String("prefix", "", "Drupal table prefix")
 var user = flag.String("user", "", "Drupal user (defaults to be the same as the Drupal database name)")
 var pass = flag.String("pass", "", "Drupal password (you will be prompted for the password if this is absent)")
 var host = flag.String("host", "localhost", "Mysql host")
