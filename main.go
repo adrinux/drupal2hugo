@@ -238,6 +238,13 @@ func writeContent(w io.Writer, node *model.JoinedNodeDataBody, emvideos []model.
 		fmt.Fprintf(w, "{{< %s %s >}}", emvideo.Provider, emvideo.VideoId)
 	}
 	fmt.Fprintln(w, body)
+
+	if node.ImgFilePath == nil {
+		nofile := ""
+		node.ImgFilePath = &nofile
+	}
+	imgfilepath := *node.ImgFilePath
+	fmt.Fprintf(w, "<img src=\"/%s\">", imgfilepath)
 }
 
 func toSingular(plural string) string {

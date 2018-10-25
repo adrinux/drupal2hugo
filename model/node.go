@@ -159,15 +159,19 @@ type JoinedNodeDataBody struct {
 	BodyValue   string
 	BodySummary string
 	BodyFormat  string
+	ImgFilePath    *string
 }
 
 func (db Database) JoinedNodeFields(offset, count int) []*JoinedNodeDataBody {
 	sql := `SELECT
 		n.Nid, n.Vid, u.Name AS UserName, n.Type, n.Title, n.status AS Published, n.Created, n.Changed, n.Comment,
-		n.Promote, n.Sticky, nr.Body AS BodyValue, nr.Teaser AS BodySummary, nr.Format AS BodyFormat
+		n.Promote, n.Sticky, nr.Body AS BodyValue, nr.Teaser AS BodySummary, nr.Format AS BodyFormat, f.filepath AS ImgFilePath
 		FROM %snode n
 		INNER JOIN %snode_revisions nr ON n.nid = nr.nid and n.vid = nr.vid
-		INNER JOIN users u ON n.uid = u.uid
+		LEFT JOIN users u ON n.uid = u.uid
+		LEFT JOIN content_type_image cti ON n.nid = cti.nid
+		LEFT JOIN files f ON cti.field_imagefield_fid = f.fid
+		GROUP BY n.nid
 		LIMIT %d,%d`
 	s2 := fmt.Sprintf(sql, db.Prefix, db.Prefix, offset, count)
 	list, err := db.DbMap.Select(JoinedNodeDataBody{}, s2)

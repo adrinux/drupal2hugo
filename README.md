@@ -7,6 +7,12 @@ Which was forked from https://bitbucket.org/rickb777/drupal2hugo
 
 # Changes in this fork
 1. Renamed drupal62hugo to highlight Drupal 6 compatibility vs Rick Beaton's original which has seen further work since it was forked by @danapsimer
+2. Removes superfluous <--!more--> comments as per ColinFinck:
+https://github.com/ColinFinck/drupal2hugo/commit/a8cb8cacb60be6d537a80eeb2d20be7262d4fc4f
+3. Sets the drupal database table prefix to empty as default
+4. Switches to using the original Gorp, not a fork as per nesono:
+https://github.com/nesono/drupal2hugo/commit/d7c3eca06dd5fe1d36f4d2da10689f60dc98fd63
+5. Prints the imagefield filepath from a content_type_image if present within an img element
 
 
 #
